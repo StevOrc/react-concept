@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.css';
-import { Movie}  from './components'
+import { Movie, Counter, Counters}  from './components'
 
 function App() {
   return (
     <main className="container">
-      <Movie/>
+      {/* <Movie/> */}
+      <Counters />
     </main>
   );
 }

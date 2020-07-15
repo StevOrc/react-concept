@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {getMovies, deleteMovie} from '../services/fakeMovieService';
+import {getMovies, deleteMovie} from '../../../services/fakeMovieService';
 
 export default class Movie extends Component {
     state = { 
