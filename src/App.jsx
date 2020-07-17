@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Movie, Counter, Counters, NavBar}  from './components'
+import { Movie, Counter, Counters, NavBar, Like}  from './components'
 
 class App extends React.Component{
 
@@ -17,22 +17,22 @@ class App extends React.Component{
   }
   render(){
       return (
-        // <main className="container">
-        //   <Movie/>
-        // </main>
-          <React.Fragment>
-          <NavBar totalItems={this.totalCount()}/>
-            <main className="container">
-              <Counters
-                counters={this.state.counters}
-                onDelete={this.handleDelete}
-                onIncrement={this.handleIncrement}
-                onDecrement={this.handleDecrement}
-                onReset={this.hanldeReset}
-                onAddCounter={this.handleAddCounter}
-              />
-            </main>
-          </React.Fragment>
+        <main className="container">
+          <Movie/>
+        </main>
+          // <React.Fragment>
+          // <NavBar totalItems={this.totalCount()}/>
+          //   <main className="container">
+          //     <Counters
+          //       counters={this.state.counters}
+          //       onDelete={this.handleDelete}
+          //       onIncrement={this.handleIncrement}
+          //       onDecrement={this.handleDecrement}
+          //       onReset={this.hanldeReset}
+          //       onAddCounter={this.handleAddCounter}
+          //     />
+          //   </main>
+          // </React.Fragment>
       );
     }
 

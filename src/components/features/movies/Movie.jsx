@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {getMovies, deleteMovie} from '../../../services/fakeMovieService';
+import {getMovies, deleteMovie, toogleLikeMovie} from '../../../services/fakeMovieService';
+import {Like} from '../../';
 
 export default class Movie extends Component {
     state = { 
@@ -19,6 +20,7 @@ export default class Movie extends Component {
                     <th scope="col">Genre</th>
                     <th scope="col">Stock</th>
                     <th scope="col">Rates</th>
+                    <th scope="col">favorite</th>
                     <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -28,6 +30,11 @@ export default class Movie extends Component {
             </table>
         </React.Fragment>
         )
+    }
+
+    toogleLike = (movie) => {
+        toogleLikeMovie(movie._id);
+        this.setState({movies: getMovies()});
     }
 
     handleDeleteMovie = (movie) => {
@@ -42,22 +49,22 @@ export default class Movie extends Component {
                     <td>{movie.genre.name}</td>
                     <td>{movie.numberInStock}</td>
                     <td>{movie.dailyRentalRate}</td>
-                    <td><button onClick={ () => this.handleDeleteMovie(movie)} className="btn btn-danger m-2">delete</button></td>
+                    <td>
+                        <Like
+                            movie={movie}
+                            onLikeOrUnlike={this.toogleLike}
+                        />
+                    </td>
+                    <td>
+                        <button
+                            onClick={ () => this.handleDeleteMovie(movie)}
+                            className="btn btn-danger m-2">
+                                delete
+                        </button>
+                    </td>
                 </tr>)
         });
 
         return reslut;
-    }
-
-    displayTest(){
-        return (
-            <tr>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-            </tr>
-        )
     }
 }

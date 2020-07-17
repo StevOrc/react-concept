@@ -3,3 +3,4 @@ export {default as Genre} from './features/genres/Genre';
 export {default as Counter} from './concepts/Counter';
 export {default as Counters} from './concepts/Counters';
 export {default as NavBar} from './navbar/NavBar';
+export {default as Like} from './shared/components/Like';
