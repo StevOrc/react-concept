@@ -1,17 +1,23 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {getMovies, deleteMovie, toogleLikeMovie} from '../../../services/fakeMovieService';
-import {Like} from '../../';
+import {Like, Pagination} from '../../';
+import {paginate} from '../../../utils/paginate';
 
 export default class Movie extends Component {
     state = { 
-        movies: getMovies()
+        movies: getMovies(),
+        pageSize: 4,
+        currentPage: 1
     }
     render() {
         const {length: count} = this.state.movies;
+        const {pageSize, currentPage, movies: allMovies} = this.state;
         if(count === 0) return <p className="m-4">No movie in Databse</p>;
 
+        const movies = paginate(allMovies, currentPage, pageSize);
+
         return (
-        <React.Fragment>
+        <Fragment>
             <p className="m-4">There is {count} movie(s) in database</p>
             <table className="table">
                 <thead>
@@ -25,10 +31,16 @@ export default class Movie extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {this.displayMovieList()}
+                    {this.displayMovieList(movies)}
                 </tbody>
             </table>
-        </React.Fragment>
+            <Pagination
+                itemsCount={count}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={this.handlePageChange}
+            />
+        </Fragment>
         )
     }
 
@@ -37,13 +49,17 @@ export default class Movie extends Component {
         this.setState({movies: getMovies()});
     }
 
+    handlePageChange = page => {
+        this.setState({currentPage: page});
+    }
+
     handleDeleteMovie = (movie) => {
         deleteMovie(movie._id);
         this.setState({movies: getMovies()});
     }
 
-    displayMovieList = () => {
-        const reslut = this.state.movies.map( movie => {
+    displayMovieList = (movies) => {
+        const reslut = movies.map( movie => {
             return (<tr key={movie._id}>
                     <td>{movie.title}</td>
                     <td>{movie.genre.name}</td>
