@@ -86,6 +86,10 @@ export function getMovies() {
   return movies;
 }
 
+export const getNumberOfLike = () => {
+  return movies.filter( m => m.isLiked ).length;
+}
+
 export function getMovie(id) {
   return movies.find(m => m._id === id);
 }

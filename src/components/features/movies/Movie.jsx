@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import {getMovies, deleteMovie, toogleLikeMovie} from '../../../services/fakeMovieService';
+import {getMovies, deleteMovie, toogleLikeMovie, getNumberOfLike} from '../../../services/fakeMovieService';
 import {Like, Pagination} from '../../';
 import {paginate} from '../../../utils/paginate';
 
@@ -7,11 +7,12 @@ export default class Movie extends Component {
     state = { 
         movies: getMovies(),
         pageSize: 4,
-        currentPage: 1
+        currentPage: 1,
+        numberOfLike: getNumberOfLike()
     }
     render() {
         const {length: count} = this.state.movies;
-        const {pageSize, currentPage, movies: allMovies} = this.state;
+        const {pageSize, currentPage, movies: allMovies, numberOfLike} = this.state;
         if(count === 0) return <p className="m-4">No movie in Databse</p>;
 
         const movies = paginate(allMovies, currentPage, pageSize);
@@ -19,6 +20,7 @@ export default class Movie extends Component {
         return (
         <Fragment>
             <p className="m-4">There is {count} movie(s) in database</p>
+            <p className="m-4">There is {numberOfLike} liked </p>
             <table className="table">
                 <thead>
                     <tr>
@@ -46,7 +48,7 @@ export default class Movie extends Component {
 
     toogleLike = (movie) => {
         toogleLikeMovie(movie._id);
-        this.setState({movies: getMovies()});
+        this.setState({movies: getMovies(), numberOfLike: getNumberOfLike()});
     }
 
     handlePageChange = page => {
