@@ -1,48 +1,73 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import {getMovies, deleteMovie, toogleLikeMovie, getNumberOfLike} from '../../../services/fakeMovieService';
-import {Like, Pagination} from '../../';
+import {getGenres} from '../../../services/fakeGenreService';
+import {Like, Pagination, ListGroup} from '../../';
 import {paginate} from '../../../utils/paginate';
 
 export default class Movie extends Component {
     state = { 
-        movies: getMovies(),
+        movies: [],
         pageSize: 4,
         currentPage: 1,
-        numberOfLike: getNumberOfLike()
+        numberOfLike: getNumberOfLike(),
+        genres: [],
+        selectedGenre: {}
     }
+
+    componentDidMount(){
+        this.setState({
+            movies: getMovies(),
+            genres: getGenres()
+        })
+    }
+
     render() {
         const {length: count} = this.state.movies;
-        const {pageSize, currentPage, movies: allMovies, numberOfLike} = this.state;
+        const {pageSize, currentPage, movies: allMovies, numberOfLike, genres: allGenre} = this.state;
         if(count === 0) return <p className="m-4">No movie in Databse</p>;
 
         const movies = paginate(allMovies, currentPage, pageSize);
 
         return (
-        <Fragment>
-            <p className="m-4">There is {count} movie(s) in database</p>
-            <p className="m-4">There is {numberOfLike} liked </p>
-            <table className="table">
-                <thead>
-                    <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Genre</th>
-                    <th scope="col">Stock</th>
-                    <th scope="col">Rates</th>
-                    <th scope="col">favorite</th>
-                    <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.displayMovieList(movies)}
-                </tbody>
-            </table>
-            <Pagination
-                itemsCount={count}
-                pageSize={pageSize}
-                currentPage={currentPage}
-                onPageChange={this.handlePageChange}
-            />
-        </Fragment>
+            <div className="container">
+                <div className="row d-flex flex-column mb-4 mt-4">
+                    <p className="m-1">There is {count} movie(s) in database</p>
+                    <p className="m-1">There is {numberOfLike} liked </p>
+
+                </div>
+                <div className="row">
+                    <div className="col-2">
+                        <ListGroup
+                            items={allGenre}
+                            selectedItem={this.state.selectedGenre}
+                            onItemSelect={this.handleGenreselect}
+                        />
+                    </div>
+                    <div className="col">
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                <th scope="col">Title</th>
+                                <th scope="col">Genre</th>
+                                <th scope="col">Stock</th>
+                                <th scope="col">Rates</th>
+                                <th scope="col">favorite</th>
+                                <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.displayMovieList(movies)}
+                            </tbody>
+                        </table>
+                        <Pagination
+                            itemsCount={count}
+                            pageSize={pageSize}
+                            currentPage={currentPage}
+                            onPageChange={this.handlePageChange}
+                        />
+                    </div>
+                </div>
+            </div>
         )
     }
 
@@ -58,6 +83,10 @@ export default class Movie extends Component {
     handleDeleteMovie = (movie) => {
         deleteMovie(movie._id);
         this.setState({movies: getMovies()});
+    }
+
+    handleGenreselect = (genre) => {
+        this.setState({ selectedGenre: genre });
     }
 
     displayMovieList = (movies) => {

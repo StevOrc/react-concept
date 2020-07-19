@@ -5,3 +5,4 @@ export {default as Counters} from './concepts/Counters';
 export {default as NavBar} from './navbar/NavBar';
 export {default as Like} from './shared/components/Like';
 export {default as Pagination} from './shared/components/Pagination';
+export {default as ListGroup} from './shared/components/ListGroup';
