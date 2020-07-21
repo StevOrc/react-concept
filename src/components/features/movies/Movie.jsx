@@ -3,6 +3,7 @@ import {getMovies, deleteMovie, toogleLikeMovie, getNumberOfLike} from '../../..
 import {getGenres} from '../../../services/fakeGenreService';
 import {Like, Pagination, ListGroup} from '../../';
 import {paginate} from '../../../utils/paginate';
+import _ from 'lodash';
 
 export default class Movie extends Component {
     state = { 
@@ -23,15 +24,19 @@ export default class Movie extends Component {
 
     render() {
         const {length: count} = this.state.movies;
-        const {pageSize, currentPage, movies: allMovies, numberOfLike, genres: allGenre} = this.state;
+        const {pageSize, currentPage, movies: allMovies, numberOfLike, genres: allGenre, selectedGenre} = this.state;
         if(count === 0) return <p className="m-4">No movie in Databse</p>;
 
-        const movies = paginate(allMovies, currentPage, pageSize);
+        const filteredItems = !_.isEmpty(selectedGenre)
+                                ? allMovies.filter( m => m.genre._id === selectedGenre._id )
+                                : allMovies;
+
+        const movies = paginate(filteredItems, currentPage, pageSize);
 
         return (
             <div className="container">
                 <div className="row d-flex flex-column mb-4 mt-4">
-                    <p className="m-1">There is {count} movie(s) in database</p>
+                    <p className="m-1">There is {filteredItems.length} movie(s) in database</p>
                     <p className="m-1">There is {numberOfLike} liked </p>
 
                 </div>
@@ -60,7 +65,7 @@ export default class Movie extends Component {
                             </tbody>
                         </table>
                         <Pagination
-                            itemsCount={count}
+                            itemsCount={filteredItems.length}
                             pageSize={pageSize}
                             currentPage={currentPage}
                             onPageChange={this.handlePageChange}
