@@ -5,10 +5,6 @@ const ListGroup = (props) => {
 
     return (
         <ul className="list-group">
-                <li
-                    onClick={() => onItemSelect({})}
-                    style={{cursor: 'pointer'}}
-                    className={ !selectedItem.name ? "list-group-item active" : "list-group-item"}> All movies</li>
             {items.map( item =>
                 <li
                     onClick={() => onItemSelect(item)}

@@ -8,7 +8,7 @@ import _ from 'lodash';
 export default class Movie extends Component {
     state = { 
         movies: [],
-        pageSize: 4,
+        pageSize: 2,
         currentPage: 1,
         numberOfLike: getNumberOfLike(),
         genres: [],
@@ -16,9 +16,10 @@ export default class Movie extends Component {
     }
 
     componentDidMount(){
+        const genres = [{name: 'All genres'},...getGenres()]
         this.setState({
             movies: getMovies(),
-            genres: getGenres()
+            genres
         })
     }
 
@@ -27,7 +28,7 @@ export default class Movie extends Component {
         const {pageSize, currentPage, movies: allMovies, numberOfLike, genres: allGenre, selectedGenre} = this.state;
         if(count === 0) return <p className="m-4">No movie in Databse</p>;
 
-        const filteredItems = !_.isEmpty(selectedGenre)
+        const filteredItems = !_.isEmpty(selectedGenre) && selectedGenre._id
                                 ? allMovies.filter( m => m.genre._id === selectedGenre._id )
                                 : allMovies;
 
@@ -91,7 +92,7 @@ export default class Movie extends Component {
     }
 
     handleGenreselect = (genre) => {
-        this.setState({ selectedGenre: genre });
+        this.setState({ selectedGenre: genre, currentPage: 1 });
     }
 
     displayMovieList = (movies) => {
