@@ -1,33 +1,27 @@
 import React, {Component} from 'react';
-import {Like} from '../../';
+import {Like, TableHeader} from '../../';
 
 class MovieTable extends Component {
 
-    raisedSort = path => {
-        const sortColumn = {...this.props.sortColumn};
-        if(sortColumn.path === path) sortColumn.order = (sortColumn.order === 'asc') ? 'desc' : 'asc';
-        else{
-            sortColumn.path = path;
-            sortColumn.order = 'asc';
-        }
-        this.props.onSort(sortColumn);
-    }
-
+    columns = [
+        {path: 'title', label: 'Title'},
+        {path: 'genre.name', label: 'Genre'},
+        {path: 'numberInStock', label: 'Stock'},
+        {path: 'dailyRentalRate', label: 'Rate'},
+        { key: 'like' },
+        { key: 'delete' }
+    ];
+    
     render() {
-        const {movies, onDeleteMovie, onLikeOrUnlike} = this.props;
+        const {movies, onDeleteMovie, onLikeOrUnlike, sortColumn, onSort} = this.props;
 
         return(
             <table className="table">
-                <thead>
-                    <tr>
-                    <th onClick={ () => this.raisedSort('title')} scope="col">Title</th>
-                    <th onClick={ () => this.raisedSort('genre.name')} scope="col">Genre</th>
-                    <th onClick={ () => this.raisedSort('numberInStock')} scope="col">Stock</th>
-                    <th onClick={ () => this.raisedSort('dayliRentalRate')} scope="col">Rates</th>
-                    <th scope="col">favorite</th>
-                    <th scope="col">Action</th>
-                    </tr>
-                </thead>
+                <TableHeader
+                    columns={this.columns}
+                    sortColumns={sortColumn}
+                    onSort={onSort}
+                />
                 <tbody>
                     
                     {movies.map( movie =>
