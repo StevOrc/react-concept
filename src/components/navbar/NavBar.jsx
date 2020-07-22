@@ -1,10 +1,10 @@
 import React from 'react';
 
 
-const NavBar = (props) =>{
+const NavBar = ({totalItems}) =>{
         return (
             <nav className="navbar navbar-light bg-light">
-                <a className="navbar-brand" href='#'>Number of items : {props.totalItems}</a>
+                <a className="navbar-brand" href='#'>Number of items : {totalItems}</a>
             </nav>
         );
 }

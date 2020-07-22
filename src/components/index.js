@@ -9,3 +9,4 @@ export {default as TableBody} from './shared/components/TableBody';
 export {default as Like} from './shared/components/Like';
 export {default as Pagination} from './shared/components/Pagination';
 export {default as ListGroup} from './shared/components/ListGroup';
+export {default as Table} from './shared/components/Table';
