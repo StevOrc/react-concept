@@ -68,7 +68,6 @@ export default class Movie extends Component {
                                 : allMovies;
 
         const sorted =_.orderBy(filteredItems, [sortColumn.path], sortColumn.order);
-
         const movies = paginate(sorted, currentPage, pageSize);
 
         return (
