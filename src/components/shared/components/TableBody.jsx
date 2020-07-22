@@ -10,12 +10,16 @@ class TableBody extends Component {
         return _.get(item, column.path);
     }
 
+    createKey = (item, column) => {
+        return item._id + (column.path || column.key);
+    }
+
     render() {
         const {data, columns} = this.props;
         return (
             <tbody>                  
-                {data.map( item => <tr>
-                    {columns.map( column => <td> {this.renderCells(item, column)} </td>)}
+                {data.map( item => <tr key={item._id}>
+                    {columns.map( column => <td key={this.createKey(item, column)}> {this.renderCells(item, column)} </td>)}
                 </tr>)}
 
             </tbody>

@@ -62,8 +62,7 @@ export default class Movie extends Component {
             sortColumn} = this.state;
 
         if(count === 0) return <p className="m-4">No movie in Databse</p>;
-
-        const filteredItems = !_.isEmpty(selectedGenre) && selectedGenre._id
+        const filteredItems = !_.isEmpty(selectedGenre) && selectedGenre._id && (selectedGenre._id !== 'allGenres')
                                 ? allMovies.filter( m => m.genre._id === selectedGenre._id )
                                 : allMovies;
 
