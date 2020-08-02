@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import './App.css';
-import { Movie, Counter, Counters, NavBar, Like}  from './components'
+import {Route, Switch, Redirect} from 'react-router-dom';
+import { Movie, Rentals, NotFound, Customers, NavBar, MovieForm}  from './components'
+// import { Counter, Counters, NavBar, Like}  from './components'
 
 class App extends React.Component{
 
@@ -17,9 +19,20 @@ class App extends React.Component{
   }
   render(){
       return (
-        <main className="container">
-          <Movie/>
-        </main>
+        <Fragment>
+          <NavBar />
+          <main className="container">
+              <Switch>
+                <Route path="/movies/:id" component={MovieForm}></Route>
+                <Route path="/movies" component={Movie}></Route>
+                <Route path="/customers" component={Customers}></Route>
+                <Route path="/rentals" component={Rentals}></Route>
+                <Route path="/not-found" component={NotFound}></Route>
+                <Redirect from="/" exact to="/movies"></Redirect>
+                <Redirect to="/not-found"></Redirect>
+              </Switch>
+          </main>
+        </Fragment>
           // <React.Fragment>
           // <NavBar totalItems={this.totalCount()}/>
           //   <main className="container">
