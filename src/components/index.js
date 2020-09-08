@@ -18,4 +18,4 @@ export { default as InputText } from "./shared/components/InputText";
 export { default as Login } from "./shared/components/Login";
 
 // JsPlayground
-export { default as JsPlayground } from "./shared/components/JsPlayground";
+export { default as JsPlaygroundContainer } from "./concepts/JSPlaygorund/JsPlaygorundConatiner";
