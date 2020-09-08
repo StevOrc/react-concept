@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch, Redirect, Link, NavLink } from "react-router-dom";
+import { Route, Switch, NavLink } from "react-router-dom";
 import HigherNumber from "./JsExercises/HigherNumber";
 import FizzBuzz from "./JsExercises/FizzBuzz";
 
