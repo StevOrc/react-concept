@@ -12,7 +12,10 @@ export { default as ListGroup } from "./shared/components/ListGroup";
 export { default as Table } from "./shared/components/Table";
 export { default as Customers } from "./features/customers/customers";
 export { default as Rentals } from "./features/rentals/rentals";
-export { default as NotFound } from "./shared/components/notFound";
+export { default as NotFound } from "./shared/components/NotFound";
 export { default as NavBar } from "./shared/components/NavBar";
 export { default as InputText } from "./shared/components/InputText";
 export { default as Login } from "./shared/components/Login";
+
+// JsPlayground
+export { default as JsPlayground } from "./shared/components/JsPlayground";

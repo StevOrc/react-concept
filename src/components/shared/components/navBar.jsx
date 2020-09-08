@@ -18,7 +18,10 @@ const NavBar = () => {
           Rentals
         </NavLink>
       </div>
-      <div>
+      <div className="d-flex">
+      <NavLink style={{fontWeight: 'bold' , color: '#F0DB4F', background: '#323330'}}  className="nav-link" to="/js-playground">
+          JS Playground
+        </NavLink>
         <NavLink className="nav-link" to="/login">
           <i
             style={{ color: "black", fontSize: "1.5rem" }}

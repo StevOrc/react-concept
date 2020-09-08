@@ -9,6 +9,7 @@ import {
   NavBar,
   MovieForm,
   Login,
+  JsPlayground
 } from "./components";
 // import { Counter, Counters, NavBar, Like}  from './components'
 
@@ -35,6 +36,7 @@ class App extends React.Component {
             <Route path="/customers" component={Customers}></Route>
             <Route path="/rentals" component={Rentals}></Route>
             <Route path="/login" component={Login}></Route>
+            <Route path="/js-playground" component={JsPlayground}></Route>
             <Route path="/not-found" component={NotFound}></Route>
             <Redirect from="/" exact to="/movies"></Redirect>
             <Redirect to="/not-found"></Redirect>
