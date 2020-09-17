@@ -1,10 +1,26 @@
 import React, { Component } from "react";
 
 class HigherNumber extends Component {
-  state = {};
+  state = {
+    number: null,
+    values: { num1: 0, num2: 0 },
+  };
+
+  higherNumber = (a, b) => {
+    let number;
+    if (a === b) number = a;
+    else {
+      number = a > b ? a : b;
+    }
+
+    this.setState({
+      number,
+    });
+  };
 
   handleOnSubmit = (e) => {
     e.prventDefault();
+    this.higherNumber();
   };
 
   render() {
@@ -18,12 +34,14 @@ class HigherNumber extends Component {
                 style={{ maxWidth: "250px" }}
                 type="text"
                 className="form-control"
+                value={this.state.values.num1}
               />
               <label> Number 2 </label>
               <input
                 style={{ maxWidth: "250px" }}
                 type="text"
                 className="form-control"
+                value={this.state.values.num1}
               />
               <button
                 style={{ minWidth: "100px" }}
@@ -35,7 +53,7 @@ class HigherNumber extends Component {
           </form>
         </div>
         <div className="col-6">
-          <h1>Resultat : </h1>
+          <h5>Resultat : </h5>
         </div>
       </div>
     );
