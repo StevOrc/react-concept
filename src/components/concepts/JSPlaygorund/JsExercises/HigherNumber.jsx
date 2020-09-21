@@ -1,4 +1,23 @@
 import React, { Component } from "react";
+import { Formik, Field } from "formik";
+import * as Yup from 'yup';
+
+const CustomInput = ({ field, form: { touched, erros }, ...props }) => {
+  // objet field contient les propiété de Field qu'on va donné à notre input : onBlur / onChange / value / name
+  // dans l'objet form de Formik on récupère les propriété qui nous intéresse
+  // ...props, le reste des propiété qu'on passe via Field
+  return (
+    <div className="form-group">
+      <label> {props.label} </label>
+      <input
+        {...field}
+        type="text"
+        {...props}
+        className="form-control"
+      />
+    </div>
+  );
+};
 
 class HigherNumber extends Component {
   state = {
@@ -18,42 +37,51 @@ class HigherNumber extends Component {
     });
   };
 
-  handleOnSubmit = (e) => {
-    e.prventDefault();
-    this.higherNumber();
-  };
+  higherNumberSchema = Yup.object().shape({
+    num1: Yup.string().required().min(1).max(3),
+    num2: Yup.string().required().min(1).max(3),
+  });
+
+  handleSubmitForm = (values, actions) => {
+    console.log("VALUES ", values);
+    console.log("FORM ", values);
+  }
 
   render() {
     return (
       <div className="row">
         <div className="col-6">
-          <form className="loginForm" onSubmit={this.handleOnSubmit}>
-            <div className="form-group">
-              <label> Number 1 </label>
-              <input
-                style={{ maxWidth: "250px" }}
-                type="text"
-                className="form-control"
-                value={this.state.values.num1}
-              />
-              <label> Number 2 </label>
-              <input
-                style={{ maxWidth: "250px" }}
-                type="text"
-                className="form-control"
-                value={this.state.values.num1}
-              />
-              <button
-                style={{ minWidth: "100px" }}
-                className="btn btn-success mt-2"
-              >
-                Higher
-              </button>
-            </div>
-          </form>
+          <div>
+            <h5>Resultat : </h5>
+          </div>
         </div>
-        <div className="col-6">
-          <h5>Resultat : </h5>
+        <div className="col-6" style={{maxWidth: "300px"}}>
+          <div>
+            <h5>Exercice : </h5>
+            <Formik
+              onSubmit={this.handleSubmitForm}
+              initialValues={{num1: "", num2: ""}}
+              validateOnBlur={false}
+              validateOnChange={false}
+              validationSchema={this.higherNumberSchema}
+            >
+              { () => <form className="">
+                <Field
+                  name="num1"
+                  type="text"
+                  label="Num 1"
+                  component={CustomInput}
+                />
+                <Field
+                  name="num2"
+                  type="text"
+                  label="Num 2"
+                  component={CustomInput}
+                />
+                <button className="btn btn-success" >Check</button>
+              </form> }
+            </Formik>
+          </div>
         </div>
       </div>
     );

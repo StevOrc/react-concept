@@ -11,20 +11,11 @@ const CustomInput = ({ field, form: { touched, erros }, ...props }) => {
         type="text"
         {...props}
         className="form-control"
-        ref={test}
       />
-      <button className="btn btn-warning" onClick={() => testToString()}>
-        test
-      </button>
     </div>
   );
 };
 
-const test = React.createRef();
-
-const testToString = () => {
-  console.log("aaa", test);
-};
 
 class LoginForm extends Component {
   state = {};
@@ -65,10 +56,15 @@ class LoginForm extends Component {
         }) => (
           <form className="loginForm mt-5" onSubmit={handleSubmit}>
             <Field
-              name="usernameAAAAA"
-              type="passwordAAAAA"
-              label="UsernameAAAA"
-              zzzzz="zzzzz"
+              name="username"
+              type="text"
+              label="Username"
+              component={CustomInput}
+            />
+            <Field
+              name="password"
+              type="password"
+              label="Password"
               component={CustomInput}
             />
             <button

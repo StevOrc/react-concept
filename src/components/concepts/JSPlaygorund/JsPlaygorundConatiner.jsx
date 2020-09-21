@@ -25,8 +25,8 @@ class JsPlaygorund extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-3">
-            <div class="list-group">
+          <div className="col-2">
+            <div className="list-group">
               <NavLink
                 className="list-group-item list-group-item-action list-group-item-light"
                 style={{ cursor: "pointer" }}
