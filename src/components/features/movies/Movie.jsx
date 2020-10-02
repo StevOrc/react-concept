@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {getMovies, deleteMovie, toogleLikeMovie, getNumberOfLike} from '../../../services/fakeMovieService';
-import {getGenres} from '../../../services/fakeGenreService';
+import { getGenres } from '../../../services/genreService';
 import {Pagination, ListGroup} from '../../';
 import {paginate} from '../../../utils/paginate';
 import MovieTable from './MovieTable';
@@ -17,8 +17,9 @@ export default class Movie extends Component {
         sortColumn: {path: 'title', order: 'asc'}
     }
 
-    componentDidMount(){
-        const genres = [{name: 'All genres', _id: "allGenres"},...getGenres()]
+    async componentDidMount(){
+        const {data} = await getGenres();
+        const genres = [{name: 'All genres', _id: "allGenres"},...data]
         this.setState({
             movies: getMovies(),
             genres
@@ -39,8 +40,9 @@ export default class Movie extends Component {
         this.setState({movies: getMovies()});
     }
 
-    handleGenreselect = (genre) => {
-        this.setState({ selectedGenre: genre, currentPage: 1 });
+    handleGenreselect = (selectedGenre) => {
+        console.log("AAAA", selectedGenre);
+        this.setState({ selectedGenre, currentPage: 1 });
     }
 
     handleSort = sortColumn => {
