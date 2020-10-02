@@ -3,9 +3,10 @@ import { Formik, Field } from "formik";
 import * as Yup from 'yup';
 
 const CustomInput = ({ field, form: { touched, erros }, ...props }) => {
-  // objet field contient les propiété de Field qu'on va donné à notre input : onBlur / onChange / value / name
-  // dans l'objet form de Formik on récupère les propriété qui nous intéresse
-  // ...props, le reste des propiété qu'on passe via Field
+  // objet field contient les propiétés de Field qu'on va donner à notre input :
+  // - onBlur / onChange / value / name via {...field}
+  // dans l'objet form de Formik on récupère les propriétés qui nous intéresse
+  // {...props} le reste des propiétés qu'on passe via Field
   return (
     <div className="form-group">
       <label> {props.label} </label>
@@ -26,25 +27,21 @@ class HigherNumber extends Component {
   };
 
   higherNumber = (a, b) => {
-    let number;
-    if (a === b) number = a;
-    else {
-      number = a > b ? a : b;
-    }
+    return (a === b) ? null : ( a > b) ? a : b;
 
-    this.setState({
-      number,
-    });
+    // this.setState({
+    //   number,
+    // });
   };
 
   higherNumberSchema = Yup.object().shape({
-    num1: Yup.string().required().min(1).max(3),
-    num2: Yup.string().required().min(1).max(3),
+    num1: Yup.number().required().min(1).max(3),
+    num2: Yup.number().required().min(1).max(3),
   });
 
   handleSubmitForm = (values, actions) => {
     console.log("VALUES ", values);
-    console.log("FORM ", values);
+    console.log("FORM ", actions);
   }
 
   render() {
@@ -65,7 +62,7 @@ class HigherNumber extends Component {
               validateOnChange={false}
               validationSchema={this.higherNumberSchema}
             >
-              { () => <form className="">
+              { ({handleSubmit, isSubmitting}) => <form onSubmit={handleSubmit} >
                 <Field
                   name="num1"
                   type="text"
