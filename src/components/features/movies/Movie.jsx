@@ -5,6 +5,7 @@ import { getMovies, deleteMovie } from '../../../services/movieService';
 import {Pagination, ListGroup} from '../../';
 import {paginate} from '../../../utils/paginate';
 import MovieTable from './MovieTable';
+import { toast } from 'react-toastify';
 import _ from 'lodash';
 
 export default class Movie extends Component {
@@ -38,11 +39,19 @@ export default class Movie extends Component {
     }
 
     handleDeleteMovie = async (movie) => {
-        await deleteMovie(movie._id)
-        const {data: movies} = await getMovies();
+        const originalMovies = [...this.state.genres];
+        const movies = originalMovies.filter( m => m._id !== movie._id);
         this.setState({
             movies
-        });
+        })
+        try{
+            await deleteMovie(movie._id);
+        } catch( ex ){
+            if(ex.response && ex.response.status === 404) toast.error('This movie has already been deleted.');
+            this.setState({
+                movies: originalMovies
+            })
+        }
     }
 
     handleGenreselect = (selectedGenre) => {
