@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import {getMovies, deleteMovie, toogleLikeMovie, getNumberOfLike} from '../../../services/fakeMovieService';
+import { toogleLikeMovie, getNumberOfLike} from '../../../services/fakeMovieService';
 import { getGenres } from '../../../services/genreService';
+import { getMovies, deleteMovie } from '../../../services/movieService';
 import {Pagination, ListGroup} from '../../';
 import {paginate} from '../../../utils/paginate';
 import MovieTable from './MovieTable';
@@ -19,9 +20,10 @@ export default class Movie extends Component {
 
     async componentDidMount(){
         const {data} = await getGenres();
+        const {data: movies} = await getMovies();
         const genres = [{name: 'All genres', _id: "allGenres"},...data]
         this.setState({
-            movies: getMovies(),
+            movies,
             genres
         })
     }
@@ -35,13 +37,15 @@ export default class Movie extends Component {
         this.setState({currentPage: page});
     }
 
-    handleDeleteMovie = (movie) => {
-        deleteMovie(movie._id);
-        this.setState({movies: getMovies()});
+    handleDeleteMovie = async (movie) => {
+        await deleteMovie(movie._id)
+        const {data: movies} = await getMovies();
+        this.setState({
+            movies
+        });
     }
 
     handleGenreselect = (selectedGenre) => {
-        console.log("AAAA", selectedGenre);
         this.setState({ selectedGenre, currentPage: 1 });
     }
 
