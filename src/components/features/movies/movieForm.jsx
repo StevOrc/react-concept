@@ -1,22 +1,48 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
+import { Formik, Field } from "formik";
+import * as Yup from "yup";
 
-class MovieForm extends Component{
+class MovieForm extends Component {
+  movieSchema = Yup.object().shape({
+    title: Yup.string().required().min(5).max(255),
+    genreId: Yup.string().required().label("Genre"),
+    numberInStock: Yup.number().min(0).max(255),
+    dailyRentalRate: Yup.number().required().min(0).max(255),
+  });
 
-    handleOnSave = () => {
-        const {history} = this.props;
-        console.log("aaa", history);
-        history.push("/movies");        
-    }
+  submitForm = (values, actions) => {
+    console.log(values);
+    console.log(actions);
+  };
 
-    render(){
-        const {match} = this.props;
-        return (
-            <div>
-                <div> Movie ID : {match.params.id} </div>
-                <button onClick={ () => this.handleOnSave()} className="btn btn-primary">Save</button>
-            </div>
-        );
-    }
+  handleOnSave = () => {
+    const { history } = this.props;
+    console.log("aaa", history);
+    history.push("/movies");
+  };
+
+  render() {
+    const { match } = this.props;
+    return (
+      <Formik
+        onSubmit={this.submitForm}
+        validateOnBlur={false}
+        validateOnChange={false}
+        validationSchema={this.userSchema}
+      >
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          values,
+          isSubmitting,
+          errors,
+          touched,
+        }) => <form className="loginForm mt-5" onSubmit={handleSubmit}>
+            </form>}
+      </Formik>
+    );
+  }
 }
- 
+
 export default MovieForm;
